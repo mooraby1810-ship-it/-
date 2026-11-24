@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبر نفسك - معاً نتواصل</title>
+
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: Arial;
+            margin: 0;
+        }
+
+        header {
+            background-color: #176b87;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        nav {
+            background-color: #064663;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 12px;
+        }
+
+        .container {
+            background-color: white;
+            max-width: 550px;
+            margin: 40px auto;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px #ccc;
+            text-align: center;
+        }
+
+        .progress {
+            background-color: #ddd;
+            height: 12px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            background-color: #176b87;
+            height: 12px;
+            width: 0%;
+            border-radius: 10px;
+        }
+
+        .option {
+            display: block;
+            width: 100%;
+            padding: 13px;
+            margin: 12px 0;
+            border: 2px solid #176b87;
+            background-color: white;
+            color: #064663;
+            border-radius: 10px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background-color: #e0f7fa;
+        }
+
+        .correct {
+            background-color: #b8f2c2;
+            border-color: green;
+        }
+
+        .wrong {
+            background-color: #ffcaca;
+            border-color: red;
+        }
+
+        #nextBtn {
+            background-color: #176b87;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            cursor: pointer;
+            display: none;
+            margin: 20px auto;
+        }
+
+        #result {
+            font-size: 22px;
+            color: #176b87;
+            font-weight: bold;
+        }
+
+        #feedback {
+            font-weight: bold;
+            margin: 15px;
+        }
+
+        .restart {
+            background-color: #064663;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>اختبر نفسك 🤟</h1>
+    <p>اختبر معلوماتك في لغة الإشارة</p>
+</header>
+
+<nav>
+    <a href="index.html">الرئيسية</a>
+    <a href="sign.html">الإشارات</a>
+    <a href="letters.html">الحروف</a>
+    <a href="numbers.html">الأرقام</a>
+</nav>
+
+<div class="container" id="quizBox">
+
+    <h2>اختبار لغة الإشارة</h2>
+
+    <p id="questionNumber">السؤال 1 من 15</p>
+
+    <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <h3 id="question"></h3>
+
+    <div id="options"></div>
+
+    <p id="feedback"></p>
+
+    <button id="nextBtn" onclick="nextQuestion()">
+        السؤال التالي
+    </button>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+    q: "ما الهدف الأساسي من لغة الإشارة؟",
+    options: [
+        "تسهيل التواصل",
+        "تعلم الكتابة",
+        "ممارسة الرياضة"
+    ],
+    answer: 0
+},
+
+{
+    q: "هل لغة الإشارة لغة عالمية واحدة؟",
+    options: [
+        "نعم، في كل الدول",
+        "لا، تختلف من مجتمع لآخر",
+        "نعم، في جميع المدارس"
+    ],
+    answer: 1
+},
+
+{
+    q: "ما الجزء الأساسي المستخدم في تكوين كثير من الإشارات؟",
+    options: [
+        "حركات اليد",
+        "حركة القدم",
+        "حركة الرأس فقط"
+    ],
+    answer: 0
+},
+
+{
+    q: "ما أهمية تعبيرات الوجه أثناء لغة الإشارة؟",
+    options: [
+        "ليس لها أي أهمية",
+        "تساعد في توضيح المعنى",
+        "تستخدم للزينة فقط"
+    ],
+    answer: 1
+},
+
+{
+    q: "كيف تلفت انتباه شخص أصم بطريقة مناسبة؟",
+    options: [
+        "الصراخ بصوت مرتفع",
+        "التلويح باليد أو اللمس الخفيف على الكتف",
+        "تجاهله تماماً"
+    ],
+    answer: 1
+},
+
+{
+    q: "هل لغة الإشارة تعتمد على حركة اليد فقط؟",
+    options: [
+        "نعم دائماً",
+        "لا، تشمل الوجه والجسم أيضاً",
+        "تعتمد على القدم فقط"
+    ],
+    answer: 1
+},
+
+{
+    q: "ما المقصود بالأبجدية الإشارية؟",
+    options: [
+        "تمثيل الحروف باستخدام اليد",
+        "تمثيل الأرقام فقط",
+        "كتابة الكلمات بالقلم"
+    ],
+    answer: 0
+},
+
+{
+    q: "ما المقصود بتهجئة الأصابع؟",
+    options: [
+        "استخدام اليد لتمثيل الحروف",
+        "تحريك القدمين",
+        "التحدث بصوت منخفض"
+    ],
+    answer: 0
+},
+
+{
+    q: "ما أفضل طريقة للتواصل مع شخص يستخدم لغة الإشارة؟",
+    options: [
+        "الوقوف بعيداً عنه",
+        "مواجهته بوضوح أثناء التواصل",
+        "إدارة ظهرك له"
+    ],
+    answer: 1
+},
+
+{
+    q: "هل يمكن أن تختلف لغة الإشارة بين الدول؟",
+    options: [
+        "نعم",
+        "لا",
+        "تختلف حسب الطقس فقط"
+    ],
+    answer: 0
+},
+
+{
+    q: "ما أهمية حركة اليد في الإشارة؟",
+    options: [
+        "تغيير شكل الملابس",
+        "المساعدة في تكوين معنى الإشارة",
+        "إصدار الأصوات"
+    ],
+    answer: 1
+},
+
+{
+    q: "ماذا يجب أن تفعل عند التواصل مع شخص أصم؟",
+    options: [
+        "تتحدث معه وأنت تنظر بعيداً",
+        "تحافظ على التواصل البصري المناسب",
+        "تغطي وجهك"
+    ],
+    answer: 1
+},
+
+{
+    q: "هل لغة الإشارة لها قواعد لغوية خاصة بها؟",
+    options: [
+        "نعم",
+        "لا",
+        "هي مجرد حركات عشوائية"
+    ],
+    answer: 0
+},
+
+{
+    q: "لماذا يجب أن تكون الإضاءة جيدة أثناء التواصل بالإشارة؟",
+    options: [
+        "حتى تكون حركات اليد والوجه واضحة",
+        "حتى لا نسمع الأصوات",
+        "حتى نغير لون الإشارات"
+    ],
+    answer: 0
+},
+
+{
+    q: "ما التصرف المناسب عند عدم فهم إشارة معينة؟",
+    options: [
+        "تخمين معناها دون سؤال",
+        "طلب توضيحها بطريقة محترمة",
+        "إنهاء الحوار فوراً"
+    ],
+    answer: 1
+}
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+function showQuestion() {
+
+    answered = false;
+
+    let q = questions[currentQuestion];
+
+    document.getElementById("questionNumber").innerText =
+        "السؤال " + (currentQuestion + 1) + " من 15";
+
+    document.getElementById("progressBar").style.width =
+        ((currentQuestion + 1) / 15 * 100) + "%";
+
+    document.getElementById("question").innerText = q.q;
+
+    document.getElementById("feedback").innerText = "";
+
+    document.getElementById("nextBtn").style.display = "none";
+
+    let optionsHTML = "";
+
+    q.options.forEach(function(option, index) {
+
+        optionsHTML +=
+            '<button class="option" onclick="checkAnswer('
+            + index + ', this)">' + option + '</button>';
+
+    });
+
+    document.getElementById("options").innerHTML = optionsHTML;
+
+}
+
+function checkAnswer(index, button) {
+
+    if (answered) {
+        return;
+    }
+
+    answered = true;
+
+    let correct = questions[currentQuestion].answer;
+
+    let allButtons = document.querySelectorAll(".option");
+
+    if (index === correct) {
+
+        score++;
+
+        button.classList.add("correct");
+
+        document.getElementById("feedback").innerText =
+            "إجابة صحيحة! أحسنت 👏";
+
+        document.getElementById("feedback").style.color = "green";
+
+    } else {
+
+        button.classList.add("wrong");
+
+        allButtons[correct].classList.add("correct");
+
+        document.getElementById("feedback").innerText =
+            "إجابة خاطئة! الإجابة الصحيحة باللون الأخضر ❤️";
+
+        document.getElementById("feedback").style.color = "red";
+
+    }
+
+    allButtons.forEach(function(btn) {
+        btn.disabled = true;
+    });
+
+    document.getElementById("nextBtn").style.display = "block";
+
+    if (currentQuestion === 14) {
+        document.getElementById("nextBtn").innerText =
+            "عرض النتيجة";
+    }
+
+}
+
+function nextQuestion() {
+
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+
+        showQuestion();
+
+    } else {
+
+        showResult();
+
+    }
+
+}
+
+function showResult() {
+
+    document.getElementById("quizBox").innerHTML =
+
+        "<h2>انتهى الاختبار 🎉</h2>" +
+
+        "<p id='result'>نتيجتك: " + score + " من 15</p>" +
+
+        "<h3>" +
+        (score >= 13 ? "ممتاز! أنت متميز في لغة الإشارة 🏆" :
+        score >= 9 ? "أحسنت! مستواك جيد جداً 👏" :
+        score >= 5 ? "جيد، استمر في التعلم ❤️" :
+        "لا تستسلم! حاول التعلم مرة أخرى 💪") +
+        "</h3>" +
+
+        "<button class='restart' onclick='location.reload()'>" +
+        "إعادة الاختبار" +
+        "</button>";
+
+}
+
+showQuestion();
+
+</script>
+
+</body>
+</html>
